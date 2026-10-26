@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AGENTS.md wizard</title>
+    <meta name="description"
+      content="Answer a few questions, get an opinionated AGENTS.md. No LLM, no telemetry, runs in your browser.">
+    <style>
+    :root {
+      color-scheme: light dark;
+      --fg: #1a1a1a;
+      --bg: #fafafa;
+      --muted: #666;
+      --line: #d8d8d8;
+      --accent: #0b5fff;
+      --warn: #b3261e;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --fg: #eee;
+        --bg: #151515;
+        --muted: #999;
+        --line: #333;
+        --accent: #6b9bff;
+        --warn: #ff8a80;
+      }
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font: 16px/1.5 system-ui, sans-serif;
+      color: var(--fg);
+      background: var(--bg);
+    }
+    header,
+    main {
+      max-width: 72rem;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+    h1 {
+      margin: 0 0 .25rem;
+      font-size: 1.5rem;
+    }
+    header p {
+      margin: 0;
+      color: var(--muted);
+    }
+    main {
+      display: grid;
+      gap: 1.5rem;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 52rem) {
+      main {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+      }
+    }
+    fieldset {
+      border: 1px solid var(--line);
+      border-radius: .5rem;
+      margin: 0 0 .75rem;
+      padding: .5rem .75rem .75rem;
+    }
+    legend {
+      font-weight: 600;
+      padding: 0 .25rem;
+    }
+    .hint {
+      margin: 0 0 .25rem;
+      color: var(--muted);
+      font-size: .875rem;
+    }
+    label {
+      display: block;
+      padding: .15rem 0;
+    }
+    input:not([type]),
+    input[type=text] {
+      width: 100%;
+      padding: .4rem .5rem;
+      font: inherit;
+      color: inherit;
+      background: transparent;
+      border: 1px solid var(--line);
+      border-radius: .25rem;
+    }
+    :focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+    pre {
+      margin: 0;
+      padding: 1rem;
+      overflow: auto;
+      max-height: 70vh;
+      border: 1px solid var(--line);
+      border-radius: .5rem;
+      font: .8125rem/1.5 ui-monospace, monospace;
+      white-space: pre-wrap;
+    }
+    .bar {
+      display: flex;
+      gap: .5rem;
+      align-items: center;
+      margin-bottom: .5rem;
+    }
+    .bar p {
+      margin: 0 auto 0 0;
+      color: var(--muted);
+    }
+    [data-over="true"] {
+      color: var(--warn);
+      font-weight: 600;
+    }
+    button {
+      font: inherit;
+      padding: .35rem .8rem;
+      color: inherit;
+      background: transparent;
+      border: 1px solid var(--line);
+      border-radius: .25rem;
+      cursor: pointer;
+    }
+    details {
+      margin-top: 1rem;
+    }
+    summary {
+      cursor: pointer;
+      font-weight: 600;
+    }
+    footer {
+      max-width: 72rem;
+      margin: 0 auto;
+      padding: 1rem;
+      color: var(--muted);
+      font-size: .875rem;
+    }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>AGENTS.md wizard</h1>
+      <p>Answer a few questions and get an opinionated AGENTS.md. No LLM, no telemetry; everything runs in your browser.</p>
+    </header>
+    <main>
+      <form id="wizard" aria-label="Project questions"
+        onsubmit="return false"></form>
+      <section aria-label="Generated AGENTS.md">
+        <div class="bar">
+          <p id="meter" aria-live="polite"></p>
+          <button id="copy" type="button">Copy</button>
+          <button id="download" type="button">Download</button>
+        </div>
+        <pre id="preview" tabindex="0"></pre>
+        <details>
+          <summary>Why these rules?</summary>
+          <ul id="why"></ul>
+        </details>
+      </section>
+    </main>
+    <footer>Your answers live only in the URL fragment; share the link to share the setup.</footer>
+    <script type="module" src="main.js"></script>
+  </body>
+</html>
