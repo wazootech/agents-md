@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { type Answers, visibleQuestions, withDefaults } from "./tree.ts";
 import { rules } from "./rules.ts";
 import {
