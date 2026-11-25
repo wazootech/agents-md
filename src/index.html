@@ -52,7 +52,7 @@
     main {
       display: grid;
       gap: 1.5rem;
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(0, 1fr);
     }
     @media (min-width: 52rem) {
       main {
@@ -101,6 +101,7 @@
       border-radius: .5rem;
       font: .8125rem/1.5 ui-monospace, monospace;
       white-space: pre-wrap;
+      overflow-wrap: anywhere;
     }
     .bar {
       display: flex;
