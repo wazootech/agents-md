@@ -1,0 +1,3 @@
+# Not formatted by bun fmt: build output and the lockfile.
+dist/
+bun.lock

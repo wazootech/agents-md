@@ -1,0 +1,3 @@
+[install]
+# One-day supply-chain delay, as deno.json's minimumDependencyAge enforced.
+minimumReleaseAge = 86400
