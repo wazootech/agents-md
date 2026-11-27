@@ -20,7 +20,7 @@ Blank command fields become visible `TODO`s rather than guesses.
 ## Develop
 
 ```sh
-deno task test   # golden behavior per archetype
+deno task test   # golden behavior per archetype (also: bun test, node --test test/)
 deno task dev    # build and serve dist/ locally
 ```
 

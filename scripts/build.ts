@@ -1,28 +1,39 @@
 /** Bundle the wizard into dist/: index.html, main.js, CNAME. */
+import { spawnSync } from "node:child_process";
+import { copyFileSync, mkdirSync, rmSync } from "node:fs";
+import process from "node:process";
+import { fileURLToPath } from "node:url";
 
 const root = new URL("../", import.meta.url);
 const dist = new URL("dist/", root);
+const path = (url: URL) => fileURLToPath(url);
 
-await Deno.remove(dist, { recursive: true }).catch(() => {});
-await Deno.mkdir(dist, { recursive: true });
+rmSync(dist, { recursive: true, force: true });
+mkdirSync(dist, { recursive: true });
 
-const bundle = await new Deno.Command(Deno.execPath(), {
-  args: [
+// Both runtimes bundle for the browser; only the subcommand differs.
+const isDeno = "deno" in process.versions;
+const args = isDeno
+  ? [
     "bundle",
     "--platform=browser",
     "--minify",
     "--output",
-    new URL("main.js", dist).pathname.replace(/^\/([A-Za-z]:)/, "$1"),
-    new URL("src/main.ts", root).pathname.replace(/^\/([A-Za-z]:)/, "$1"),
-  ],
-  stdout: "inherit",
-  stderr: "inherit",
-}).output();
-if (!bundle.success) Deno.exit(bundle.code);
+    path(new URL("main.js", dist)),
+    path(new URL("src/main.ts", root)),
+  ]
+  : [
+    "build",
+    "--target=browser",
+    "--minify",
+    "--outfile",
+    path(new URL("main.js", dist)),
+    path(new URL("src/main.ts", root)),
+  ];
 
-await Deno.copyFile(
-  new URL("src/index.html", root),
-  new URL("index.html", dist),
-);
-await Deno.copyFile(new URL("CNAME", root), new URL("CNAME", dist));
+const bundle = spawnSync(process.execPath, args, { stdio: "inherit" });
+if (bundle.status !== 0) process.exit(bundle.status ?? 1);
+
+copyFileSync(new URL("src/index.html", root), new URL("index.html", dist));
+copyFileSync(new URL("CNAME", root), new URL("CNAME", dist));
 console.log("built dist/");
