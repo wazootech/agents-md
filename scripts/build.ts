@@ -11,27 +11,18 @@ const path = (url: URL) => fileURLToPath(url);
 rmSync(dist, { recursive: true, force: true });
 mkdirSync(dist, { recursive: true });
 
-// Both runtimes bundle for the browser; only the subcommand differs.
-const isDeno = "deno" in process.versions;
-const args = isDeno
-  ? [
-    "bundle",
-    "--platform=browser",
-    "--minify",
-    "--output",
-    path(new URL("main.js", dist)),
-    path(new URL("src/main.ts", root)),
-  ]
-  : [
+const bundle = spawnSync(
+  process.execPath,
+  [
     "build",
     "--target=browser",
     "--minify",
     "--outfile",
     path(new URL("main.js", dist)),
     path(new URL("src/main.ts", root)),
-  ];
-
-const bundle = spawnSync(process.execPath, args, { stdio: "inherit" });
+  ],
+  { stdio: "inherit" },
+);
 if (bundle.status !== 0) process.exit(bundle.status ?? 1);
 
 copyFileSync(new URL("src/index.html", root), new URL("index.html", dist));

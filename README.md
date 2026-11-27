@@ -20,8 +20,10 @@ Blank command fields become visible `TODO`s rather than guesses.
 ## Develop
 
 ```sh
-deno task test   # golden behavior per archetype (also: bun test, node --test test/)
-deno task dev    # build and serve dist/ locally
+bun install
+bun test         # golden behavior per archetype (also: node --test test/)
+bun run dev      # build and serve dist/ on http://localhost:8000
+bun run ci       # format check, lint, type check, tests, build
 ```
 
 Changing rule text? Bump `RULESET_VERSION` in `src/generate.ts`.

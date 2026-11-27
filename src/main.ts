@@ -79,11 +79,13 @@ function renderOutput() {
   meter.textContent = `${n} / ${LINE_BUDGET} lines`;
   meter.dataset.over = String(n > LINE_BUDGET);
   why.replaceChildren(
-    ...rules.filter((r) => !r.when || r.when(full)).map((r) => {
-      const li = document.createElement("li");
-      li.textContent = `${r.section}: ${r.why}`;
-      return li;
-    }),
+    ...rules
+      .filter((r) => !r.when || r.when(full))
+      .map((r) => {
+        const li = document.createElement("li");
+        li.textContent = `${r.section}: ${r.why}`;
+        return li;
+      }),
   );
 }
 
