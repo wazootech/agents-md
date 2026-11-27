@@ -19,7 +19,8 @@ this repo's specifics:
   `bun install --frozen-lockfile`, so commit any `bun.lock` change.
 - The code is Node-compatible (`node:*` APIs, `node:test`); Bun is the tooling.
   The package is not published, so there is no `jsr.json`.
-- `code-health.yml` only warns: files over 120 lines of code (300 for tests) and
-  `TODO`/`FIXME` without an issue link. There are no exclusions; the generator's
+- `code-health.yml` fails on a file over 120 lines of code (300 for tests);
+  files that were already over it are listed there with a ceiling that only
+  shrinks. A `TODO`/`FIXME` without an issue link only warns. The generator's
   own `TODO:` placeholder text in `src/` and `test/` warns by design.
 - `.github/CODEOWNERS` routes review to the repo owner.
