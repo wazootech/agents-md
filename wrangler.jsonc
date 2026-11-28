@@ -1,0 +1,20 @@
+// Cloudflare Workers config for this site (wazootech/workspace#67).
+//
+// Static assets only, no Worker script. Nothing deploys from this file yet:
+// the repo is not connected to Workers Builds, and agents.wazoo.dev is still served by
+// GitHub Pages. There is deliberately no route or custom domain here; adding one
+// would claim the name on the next deploy.
+//
+// Build command for Workers Builds: bun install --frozen-lockfile && bun run build
+{
+  "$schema": "https://unpkg.com/wrangler@4.112.0/config-schema.json",
+  "name": "agents-md",
+  "compatibility_date": "2026-11-01",
+  "assets": {
+    "directory": "dist",
+    // Matches GitHub Pages: unknown paths get 404.html when the build has one.
+    "not_found_handling": "404-page",
+  },
+  "workers_dev": true,
+  "preview_urls": true,
+}
